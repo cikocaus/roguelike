@@ -1,4 +1,4 @@
-# roguelike
+# Roguelike
 2D Roguelike tutorial
 
 Learn how to make a 2D Roguelike game with this project.
