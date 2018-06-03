@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -46,25 +45,12 @@ public class BoardManager : MonoBehaviour
         Instantiate(exit, new Vector3(columns - 1, rows - 1, 0f), Quaternion.identity);
     }
 
-    void InitialiseList()
-    {
-        gridPositions.Clear();
-
-        for(int x = 1; x < columns -1; x++)
-        {
-            for (int y = 1; y < columns - 1; y++)
-            {
-                gridPositions.Add(new Vector3(x, y, 0f));
-            }
-        }
-    }
-
     void BoardSetup()
     {
         boardHolder = new GameObject(board).transform;
-        for (int x = 1; x < columns + 1; x++)
+        for (int x = -1; x < columns + 1; x++)
         {
-            for (int y = 1; y < columns + 1; y++)
+            for (int y = -1; y < columns + 1; y++)
             {
                 GameObject toInstatiate = floorTiles[Random.Range(0, floorTiles.Length)];
                 if (x == -1 || x == columns || y == -1 || y == rows)
@@ -79,12 +65,17 @@ public class BoardManager : MonoBehaviour
         }
     }
 
-    Vector3 RandomPosition()
+    void InitialiseList()
     {
-        int randomIndex = Random.Range(0, gridPositions.Count);
-        Vector3 randomPosition = gridPositions[randomIndex];
-        gridPositions.RemoveAt(randomIndex);
-        return randomPosition;
+        gridPositions.Clear();
+
+        for(int x = 1; x < columns -1; x++)
+        {
+            for (int y = 1; y < columns - 1; y++)
+            {
+                gridPositions.Add(new Vector3(x, y, 0f));
+            }
+        }
     }
 
     void LayoutObjectAtRandom(GameObject[] tileArray, int minimum, int maximum)
@@ -96,5 +87,13 @@ public class BoardManager : MonoBehaviour
             GameObject tileChoice = tileArray[Random.Range(0, tileArray.Length)];
             Instantiate(tileChoice, randomPosition, Quaternion.identity);
         }
+    }
+
+    Vector3 RandomPosition()
+    {
+        int randomIndex = Random.Range(0, gridPositions.Count);
+        Vector3 randomPosition = gridPositions[randomIndex];
+        gridPositions.RemoveAt(randomIndex);
+        return randomPosition;
     }
 }

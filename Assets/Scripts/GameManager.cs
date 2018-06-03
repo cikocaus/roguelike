@@ -2,15 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
+    public static GameManager instance = null;
+    public BoardManager boardManager;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    private int level = 3;
+
+    void Awake()
+    {
+        InitInstance();
+        DontDestroyOnLoad(gameObject);
+        boardManager = GetComponent<BoardManager>();
+        InitGame();
+    }
+
+    void InitGame()
+    {
+        boardManager.SetupScene(level);
+    }
+
+    void InitInstance()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        } else
+        {
+            Destroy(gameObject);
+        }
+    }
 }
